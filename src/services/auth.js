@@ -4,14 +4,14 @@ import { tokenUtils } from '../utils/token';
 export const authService = {
     /**
      * Login User
-     * @param {string} email 
+     * @param {string} username 
      * @param {string} password 
      * @returns {Promise<object>} Parsed user data (optional) or basic success
      */
-    login: async (email, password) => {
+    login: async (username, password) => {
         const response = await apiClient('/auth/login', {
             method: 'POST',
-            body: JSON.stringify({ email, password }),
+            body: JSON.stringify({ username, password }),
         });
 
         if (response.ok) {

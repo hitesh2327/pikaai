@@ -29,6 +29,9 @@ export const apiClient = async (endpoint, options = {}) => {
     };
 
     try {
+        console.log("config: ", config);
+        console.log("url: ", url);
+
         const response = await fetch(url, config);
 
         // Simple error handling for now

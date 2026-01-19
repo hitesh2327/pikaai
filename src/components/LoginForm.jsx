@@ -49,7 +49,7 @@ const ThemeToggle = ({ theme, setTheme }) => {
 
 const LoginForm = ({ setFocusedInput, theme, setTheme, onLoginSuccess }) => {
     // Defaulting to requested static data for convenience, but editable
-    const [email, setEmail] = useState('test@pikachat.ai');
+    const [username, setUserName] = useState('test@pikachat.ai');
     const [password, setPassword] = useState('password123');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -60,7 +60,7 @@ const LoginForm = ({ setFocusedInput, theme, setTheme, onLoginSuccess }) => {
         setError(null);
 
         try {
-            await authService.login(email, password);
+            await authService.login(username, password);
             // If we get here, it didn't throw, so success
             if (onLoginSuccess) onLoginSuccess();
 
@@ -89,11 +89,11 @@ const LoginForm = ({ setFocusedInput, theme, setTheme, onLoginSuccess }) => {
 
             <form onSubmit={handleLogin}>
                 <FloatingInput
-                    type="email"
-                    placeholder="Email address"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    onFocus={() => setFocusedInput('email')}
+                    type="username"
+                    placeholder="Enter Username..."
+                    value={username}
+                    onChange={(e) => setUserName(e.target.value)}
+                    onFocus={() => setFocusedInput('username')}
                     onBlur={() => setFocusedInput(null)}
                 />
                 <FloatingInput
