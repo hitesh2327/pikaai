@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Sun, Moon, Monitor } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { authService } from '../services/auth';
 
 const FloatingInput = ({ type, placeholder, onFocus, onBlur, value, onChange }) => {
@@ -53,6 +54,7 @@ const LoginForm = ({ setFocusedInput, theme, setTheme, onLoginSuccess }) => {
     const [password, setPassword] = useState('password123');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -61,8 +63,8 @@ const LoginForm = ({ setFocusedInput, theme, setTheme, onLoginSuccess }) => {
 
         try {
             await authService.login(username, password);
-            // If we get here, it didn't throw, so success
-            if (onLoginSuccess) onLoginSuccess();
+            // Navigate to chat
+            navigate('/chat');
 
         } catch (err) {
             console.error("Login failed", err);

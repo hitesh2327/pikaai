@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Send, User, Bot } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Send, User, Bot, Paperclip, FileText, X } from 'lucide-react';
 
 const ChatArea = () => {
     const [messages, setMessages] = useState([
@@ -8,19 +8,43 @@ const ChatArea = () => {
         { id: 3, role: 'assistant', content: 'Sure! A chat layout typically consists of a sidebar for history and a main area for messages. How specific do you want to get?' },
     ]);
     const [inputValue, setInputValue] = useState('');
+    const [attachedFile, setAttachedFile] = useState(null);
+    const messagesEndRef = useRef(null);
+    const fileInputRef = useRef(null);
+
+    // Auto-Scroll Logic
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    };
+
+    useEffect(() => {
+        scrollToBottom();
+    }, [messages]);
 
     const handleSend = () => {
-        if (!inputValue.trim()) return;
+        if (!inputValue.trim() && !attachedFile) return;
 
-        // Add user message mock
-        const newMessage = { id: Date.now(), role: 'user', content: inputValue };
+        // Add user message mock with attachment if present
+        let content = inputValue;
+        if (attachedFile) {
+            content = `[Attached: ${attachedFile.name}] ${content}`;
+        }
+
+        const newMessage = { id: Date.now(), role: 'user', content: content };
         setMessages([...messages, newMessage]);
         setInputValue('');
+        setAttachedFile(null); // Clear attachment
 
         // Mock response after delay
         setTimeout(() => {
             setMessages(prev => [...prev, { id: Date.now() + 1, role: 'assistant', content: "That sounds like a great plan! Let me know if you need code snippets." }]);
         }, 1000);
+    };
+
+    const handleFileSelect = (e) => {
+        if (e.target.files && e.target.files[0]) {
+            setAttachedFile(e.target.files[0]);
+        }
     };
 
     return (
@@ -47,6 +71,7 @@ const ChatArea = () => {
                             </div>
                         </div>
                     ))}
+                    <div ref={messagesEndRef} />
                 </div>
                 {/* Spacer for bottom input */}
                 <div className="h-32 md:h-48 flex-shrink-0"></div>
@@ -54,8 +79,36 @@ const ChatArea = () => {
 
             {/* Input Area */}
             <div className="absolute bottom-0 left-0 w-full border-t md:border-t-0 dark:border-white/20 md:border-transparent md:dark:border-transparent md:bg-vert-light-gradient bg-white dark:bg-gray-800 md:!bg-transparent dark:md:bg-vert-dark-gradient pt-2">
-                <div className="stretch mx-2 flex flex-row gap-3 last:mb-2 md:mx-4 md:last:mb-6 lg:mx-auto lg:max-w-2xl xl:max-w-3xl">
+                <div className="stretch mx-2 flex flex-col gap-3 last:mb-2 md:mx-4 md:last:mb-6 lg:mx-auto lg:max-w-2xl xl:max-w-3xl">
+
+                    {/* File Attachment Preview */}
+                    {attachedFile && (
+                        <div className="flex items-center gap-2 p-3 bg-gray-100 dark:bg-gray-700 rounded-md border border-gray-200 dark:border-gray-600 w-fit">
+                            <FileText size={20} className="text-gray-500 dark:text-gray-300" />
+                            <span className="text-sm text-gray-700 dark:text-gray-200 truncate max-w-[200px]">{attachedFile.name}</span>
+                            <button onClick={() => setAttachedFile(null)} className="ml-2 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-full p-1">
+                                <X size={14} />
+                            </button>
+                        </div>
+                    )}
+
                     <div className="flex flex-col w-full py-2 flex-grow md:py-3 md:pl-4 relative border border-black/10 bg-white dark:border-gray-900/50 dark:text-white dark:bg-gray-700 rounded-md shadow-[0_0_10px_rgba(0,0,0,0.10)] dark:shadow-[0_0_15px_rgba(0,0,0,0.10)]">
+                        {/* Hidden File Input */}
+                        <input
+                            type="file"
+                            ref={fileInputRef}
+                            className="hidden"
+                            onChange={handleFileSelect}
+                        />
+
+                        {/* Attachment Button */}
+                        <button
+                            className="absolute left-2 top-2 md:top-3 md:left-4 p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+                            onClick={() => fileInputRef.current?.click()}
+                        >
+                            <Paperclip size={20} />
+                        </button>
+
                         <textarea
                             value={inputValue}
                             onChange={(e) => setInputValue(e.target.value)}
@@ -66,7 +119,7 @@ const ChatArea = () => {
                                 }
                             }}
                             placeholder="Send a message..."
-                            className="m-0 w-full resize-none border-0 bg-transparent p-0 pl-2 pr-7 focus:ring-0 focus-visible:ring-0 dark:bg-transparent md:pl-0"
+                            className="m-0 w-full resize-none border-0 bg-transparent p-0 pl-10 pr-7 focus:ring-0 focus-visible:ring-0 dark:bg-transparent md:pl-10"
                             style={{ maxHeight: '200px', height: '24px', overflowY: 'hidden' }}
                             rows={1}
                         />
