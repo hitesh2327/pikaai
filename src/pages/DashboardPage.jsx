@@ -1,13 +1,18 @@
-import React from 'react';
+// javascript
+import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
     ResponsiveContainer, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip,
-    PieChart, Pie, Cell, BarChart, Bar, Legend
+    PieChart, Pie, Cell
 } from 'recharts';
 import { Users, MessageSquare, Zap, Activity, ArrowUp, ArrowDown } from 'lucide-react';
 import DashboardLayout from '../components/Dashboard/DashboardLayout';
+import Mascot from '../components/Mascot';
 
 const DashboardPage = ({ theme, setTheme }) => {
+    // State for Mascot Tracking
+    const [mascotTarget, setMascotTarget] = useState(null);
+    const [mascotEmotion, setMascotEmotion] = useState('idle');
 
     // Mock Data
     const activityData = [
@@ -34,18 +39,41 @@ const DashboardPage = ({ theme, setTheme }) => {
         { name: 'DALL-E', usage: 2400 },
     ];
 
+    const handleCardHover = (e, trend) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        setMascotTarget({
+            x: rect.left + rect.width / 2,
+            y: rect.top + rect.height / 2
+        });
+
+        if (trend && trend > 10) {
+            setMascotEmotion('happy');
+        } else if (trend && trend < 0) {
+            setMascotEmotion('neutral'); // Thoughtful for negative
+        } else {
+            setMascotEmotion('idle');
+        }
+    };
+
+    const handleCardLeave = () => {
+        setMascotTarget(null);
+        setMascotEmotion('idle');
+    };
+
     const StatCard = ({ title, value, trend, icon: Icon, color }) => (
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow"
+            className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow cursor-default"
+            onMouseEnter={(e) => handleCardHover(e, trend)}
+            onMouseLeave={handleCardLeave}
         >
             <div className="flex items-center justify-between mb-4">
-                <div className={`p-3 rounded-lg ${color} bg-opacity-20`}>
+                <div className={`p - 3 rounded - lg ${ color } bg - opacity - 20`}>
                     <Icon size={24} className={color.replace('bg-', 'text-')} />
                 </div>
                 {trend && (
-                    <div className={`flex items-center gap-1 text-xs font-semibold ${trend > 0 ? 'text-green-500' : 'text-red-500'}`}>
+                    <div className={`flex items - center gap - 1 text - xs font - semibold ${ trend > 0 ? 'text-green-500' : 'text-red-500' } `}>
                         {trend > 0 ? <ArrowUp size={14} /> : <ArrowDown size={14} />}
                         {Math.abs(trend)}%
                     </div>
@@ -64,15 +92,27 @@ const DashboardPage = ({ theme, setTheme }) => {
                 <motion.div
                     initial={{ opacity: 0, scale: 0.98 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-8 text-white shadow-lg"
+                    className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-8 text-white shadow-lg flex items-center justify-between"
                 >
-                    <div className="relative z-10">
+                    <div className="relative z-10 max-w-2xl">
                         <h1 className="text-3xl font-bold mb-2">Welcome back to PikaAI 👋</h1>
-                        <p className="text-white/90 text-lg max-w-2xl">Here’s how your AI conversations are performing. You have reached 80% of your monthly token limit.</p>
+                        <p className="text-white/90 text-lg">Here’s how your AI conversations are performing. You have reached 80% of your monthly token limit.</p>
                         <button className="mt-6 px-6 py-2 bg-white text-purple-600 font-bold rounded-lg shadow-md hover:bg-gray-100 transition-colors">
                             View Insights
                         </button>
                     </div>
+
+                    {/* Dashboard Mascot */}
+                    <div className="hidden lg:block relative z-20 pr-12">
+                         <Mascot
+                            size={100}
+                            color="bg-yellow-400"
+                            target={mascotTarget}
+                            emotion={mascotEmotion}
+                            className="shadow-2xl"
+                        />
+                    </div>
+
                     {/* Decorative Circles */}
                     <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/3 blur-3xl"></div>
                     <div className="absolute bottom-0 left-0 w-48 h-48 bg-black/10 rounded-full translate-y-1/2 -translate-x-1/3 blur-2xl"></div>
@@ -131,7 +171,7 @@ const DashboardPage = ({ theme, setTheme }) => {
                                         dataKey="value"
                                     >
                                         {pieData.map((entry, index) => (
-                                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                            <Cell key={`cell - ${ index } `} fill={COLORS[index % COLORS.length]} />
                                         ))}
                                     </Pie>
                                     <Tooltip />

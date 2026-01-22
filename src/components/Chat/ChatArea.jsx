@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, User, Bot, Paperclip, FileText, X } from 'lucide-react';
+import Mascot from '../Mascot';
 
 const ChatArea = () => {
     const [messages, setMessages] = useState([
@@ -9,6 +10,7 @@ const ChatArea = () => {
     ]);
     const [inputValue, setInputValue] = useState('');
     const [attachedFile, setAttachedFile] = useState(null);
+    const [isTyping, setIsTyping] = useState(false);
     const messagesEndRef = useRef(null);
     const fileInputRef = useRef(null);
 
@@ -19,7 +21,7 @@ const ChatArea = () => {
 
     useEffect(() => {
         scrollToBottom();
-    }, [messages]);
+    }, [messages, isTyping]);
 
     const handleSend = () => {
         if (!inputValue.trim() && !attachedFile) return;
@@ -34,11 +36,13 @@ const ChatArea = () => {
         setMessages([...messages, newMessage]);
         setInputValue('');
         setAttachedFile(null); // Clear attachment
+        setIsTyping(true);
 
         // Mock response after delay
         setTimeout(() => {
             setMessages(prev => [...prev, { id: Date.now() + 1, role: 'assistant', content: "That sounds like a great plan! Let me know if you need code snippets." }]);
-        }, 1000);
+            setIsTyping(false);
+        }, 3000);
     };
 
     const handleFileSelect = (e) => {
@@ -71,6 +75,24 @@ const ChatArea = () => {
                             </div>
                         </div>
                     ))}
+
+                    {/* Typing Indicator with Mascot */}
+                    {isTyping && (
+                        <div className="w-full bg-gray-50 dark:bg-[#444654] group">
+                            <div className="text-base gap-4 md:gap-6 md:max-w-2xl lg:max-w-[38rem] xl:max-w-3xl p-4 md:py-6 flex lg:px-0 m-auto items-center">
+                                <div className="flex-shrink-0 flex flex-col relative items-end">
+                                    <Mascot size={30} color="bg-indigo-500" emotion="thinking" />
+                                </div>
+                                <div className="relative flex-1 overflow-hidden text-gray-400 text-sm flex items-center gap-1">
+                                    <span>Thinking</span>
+                                    <span className="animate-pulse">.</span>
+                                    <span className="animate-pulse delay-75">.</span>
+                                    <span className="animate-pulse delay-150">.</span>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
                     <div ref={messagesEndRef} />
                 </div>
                 {/* Spacer for bottom input */}
