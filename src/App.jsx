@@ -5,6 +5,8 @@ import LoginForm from './components/LoginForm';
 import ChatPage from './pages/ChatPage';
 import PricingPage from './pages/PricingPage';
 import DashboardPage from './pages/DashboardPage';
+import UnderDevelopmentPage from './pages/UnderDevelopmentPage';
+import AboutPage from './pages/AboutPage';
 import { tokenUtils } from './utils/token';
 
 // Protected Route Wrapper
@@ -63,6 +65,10 @@ function App() {
             />
           </LoginLayout>
         } />
+
+        {/* Public Routes */}
+        <Route path="/under-development" element={<UnderDevelopmentPage />} />
+        <Route path="/about" element={<AboutPage />} />
 
         {/* Chat Routes */}
         <Route path="/chat" element={

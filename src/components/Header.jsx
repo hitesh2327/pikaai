@@ -32,12 +32,18 @@ const Header = ({ activePage }) => {
                 >
                     Pricing
                 </Link>
-                <a href="#" className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white text-sm font-medium transition-colors">
+                <Link
+                    to="/about"
+                    className={`text-sm font-medium transition-colors ${activePage === 'about' ? 'text-black dark:text-white font-bold' : 'text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white'}`}
+                >
                     About Pika AI
-                </a>
-                <a href="#" className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white text-sm font-medium transition-colors">
+                </Link>
+                <Link
+                    to="/under-development"
+                    className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white text-sm font-medium transition-colors"
+                >
                     Profile
-                </a>
+                </Link>
             </nav>
 
             {/* Mobile Menu Placeholder (Optional, for responsiveness if needed later) */}
