@@ -24,7 +24,7 @@ const UnderDevelopmentPage = () => {
                     </p>
 
                     <Link
-                        to="/"
+                        to="/dashboard"
                         className="flex items-center gap-2 px-6 py-3 bg-white text-black font-bold rounded-lg hover:bg-gray-200 transition-colors"
                     >
                         <ArrowLeft size={18} />
