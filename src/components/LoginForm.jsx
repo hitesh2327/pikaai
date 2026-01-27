@@ -50,7 +50,7 @@ const ThemeToggle = ({ theme, setTheme }) => {
 
 const LoginForm = ({ setFocusedInput, theme, setTheme, onLoginSuccess }) => {
     // Defaulting to requested static data for convenience, but editable
-    const [username, setUserName] = useState('test@pikachat.ai');
+    const [username, setUserName] = useState('hitesh@gmail.com');
     const [password, setPassword] = useState('password123');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);

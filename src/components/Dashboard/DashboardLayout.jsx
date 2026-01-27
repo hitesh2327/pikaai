@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import DashboardSidebar from './DashboardSidebar';
+import Footer from '../Footer';
 import { Menu, Bell, Search, Sun, Moon } from 'lucide-react';
 
 const DashboardLayout = ({ children, theme, setTheme }) => {
@@ -64,8 +65,13 @@ const DashboardLayout = ({ children, theme, setTheme }) => {
                 </header>
 
                 {/* Page Content */}
-                <main className="flex-1 p-4 md:p-8 overflow-y-auto">
-                    {children}
+                <main className="flex-1 overflow-y-auto flex flex-col">
+                    <div className="flex-1 p-4 md:p-8">
+                        {children}
+                    </div>
+                    <div className="mt-auto">
+                        <Footer />
+                    </div>
                 </main>
             </div>
 

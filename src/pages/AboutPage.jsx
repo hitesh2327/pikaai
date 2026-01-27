@@ -3,7 +3,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Mascot from '../components/Mascot';
 import { motion } from 'framer-motion';
-import { ArrowRight, Cpu, Globe, Zap, Shield, Users, Layers, MessageSquare } from 'lucide-react';
+import { ArrowRight, Cpu, Globe, Zap, Shield, Users, Layers, MessageSquare, CheckCircle, Lock } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const AboutPage = () => {
@@ -81,15 +81,95 @@ const AboutPage = () => {
                             <Link to="/pricing" className="px-8 py-4 bg-yellow-400 text-black font-bold rounded-full hover:bg-yellow-300 transition-all transform hover:scale-105 shadow-lg flex items-center gap-2">
                                 Get Started <ArrowRight size={20} />
                             </Link>
-                            <a href="#capabilities" className="px-8 py-4 bg-gray-800 text-white font-semibold rounded-full border border-gray-700 hover:bg-gray-750 transition-all hover:border-gray-600">
-                                Explore Features
+                            <a href="#demo" className="px-8 py-4 bg-gray-800 text-white font-semibold rounded-full border border-gray-700 hover:bg-gray-750 transition-all hover:border-gray-600">
+                                Watch Demo
                             </a>
                         </motion.div>
                     </div>
                 </section>
 
+                {/* --- DEMO VIDEO SECTION --- */}
+                <section id="demo" className="py-20 px-6">
+                    <div className="max-w-5xl mx-auto">
+                        <motion.div
+                            initial={{ opacity: 0, y: 40 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="relative aspect-video bg-gray-900 rounded-3xl overflow-hidden shadow-2xl border border-gray-800 group"
+                        >
+                            {/* Placeholder for embedded video */}
+                            <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-black flex items-center justify-center">
+                                <div className="text-center p-8">
+                                    <div className="w-20 h-20 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-6 text-black cursor-pointer hover:scale-110 transition-transform shadow-lg shadow-yellow-500/20 group-hover:shadow-yellow-500/40">
+                                        <div className="ml-1 border-t-[10px] border-t-transparent border-l-[18px] border-l-black border-b-[10px] border-b-transparent"></div>
+                                    </div>
+                                    <p className="text-gray-400 font-medium tracking-wide">SEE PIKA IN ACTION</p>
+                                </div>
+                            </div>
+
+                            {/* Decorative Elements */}
+                            <div className="absolute top-4 left-4 flex gap-2">
+                                <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                                <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                            </div>
+                        </motion.div>
+                    </div>
+                </section>
+
+                {/* --- INTERACTIVE MASCOT STORYTELLING --- */}
+                <section className="py-24 px-6 bg-gray-800/20 border-y border-gray-800 overflow-hidden">
+                    <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                        <motion.div
+                            initial={{ opacity: 0, x: -50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            className="relative"
+                        >
+                            <div className="absolute inset-0 bg-yellow-500/5 blur-3xl rounded-full"></div>
+                            <div className="relative bg-gray-900 p-8 rounded-3xl border border-gray-800 shadow-xl">
+                                <div className="flex items-start gap-4 mb-6">
+                                    <Mascot emotion="thinking" size={50} />
+                                    <div className="bg-gray-800 p-4 rounded-2xl rounded-tl-none border border-gray-700">
+                                        <p className="text-gray-200">"Hmm, looking for a way to automate your customer support without losing that human touch?"</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-start gap-4 flex-row-reverse mb-6">
+                                    <div className="w-10 h-10 bg-indigo-500 rounded-full flex items-center justify-center text-xs font-bold">YOU</div>
+                                    <div className="bg-indigo-900/30 p-4 rounded-2xl rounded-tr-none border border-indigo-500/30">
+                                        <p className="text-indigo-100">"Exactly! But most bots feel so... robotic."</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-start gap-4">
+                                    <Mascot emotion="happy" size={50} />
+                                    <div className="bg-gray-800 p-4 rounded-2xl rounded-tl-none border border-gray-700">
+                                        <p className="text-gray-200">"That's where I come in! I adapt to your specific domain, learn your tone, and handle complex queries instantly."</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </motion.div>
+
+                        <div className="space-y-8">
+                            <motion.h2
+                                initial={{ opacity: 0 }}
+                                whileInView={{ opacity: 1 }}
+                                className="text-4xl font-bold"
+                            >
+                                Your New <span className="text-yellow-400">Digital Teammate</span>
+                            </motion.h2>
+                            <p className="text-gray-400 text-lg leading-relaxed">
+                                Pika isn't just a script runner. It's a context-aware entity that understands the nuance of your business. Whether it's guiding a candidate through an interview or troubleshooting a technical issue, Pika stays in character and on point.
+                            </p>
+                            <button className="text-yellow-400 font-bold hover:text-yellow-300 flex items-center gap-2">
+                                Meet the family <ArrowRight size={18} />
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+
                 {/* --- WHAT IS PIKA AI? --- */}
-                <section className="py-24 px-6 bg-gray-900 border-t border-gray-800">
+                <section className="py-24 px-6 bg-gray-900">
                     <div className="max-w-7xl mx-auto">
                         <motion.div
                             initial="hidden"
@@ -163,6 +243,103 @@ const AboutPage = () => {
                                 description="A versatile companion for everyday tasks. Brainstorm ideas, draft content, summarize documents, and explore new topics with a helpful AI partner."
                                 tags={['Productivity', 'Creative', 'Analysis']}
                                 color="border-l-4 border-yellow-500"
+                            />
+                        </div>
+                    </div>
+                </section>
+
+                {/* --- TIMELINE / VISION --- */}
+                <section className="py-24 px-6 bg-gray-900 border-t border-gray-800">
+                    <div className="max-w-4xl mx-auto">
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            whileInView={{ opacity: 1 }}
+                            className="text-center mb-16"
+                        >
+                            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Vision & Roadmap</h2>
+                            <p className="text-gray-400">Building the most adaptable AI infrastructure for the next decade.</p>
+                        </motion.div>
+
+                        <div className="relative border-l-2 border-gray-800 ml-4 md:ml-0 md:pl-8 space-y-12">
+                            <TimelineItem
+                                year="2024"
+                                title="Inception"
+                                description="Pika AI launches with core conversational capabilities and basic domain awareness."
+                                active
+                            />
+                            <TimelineItem
+                                year="2025"
+                                title="The Platform Era"
+                                description="Introduction of the API, Dashboard metrics, and 'Mascot' emotional intelligence engine."
+                                active
+                            />
+                            <TimelineItem
+                                year="2026"
+                                title="Autonomous Agents"
+                                description="Pika agents will handle complex, multi-step tasks across external tools independently."
+                            />
+                            <TimelineItem
+                                year="Beyond"
+                                title="Universal Intelligence"
+                                description="Seamless integration into every digital touchpoint, making AI invisible yet omnipresent."
+                            />
+                        </div>
+                    </div>
+                </section>
+
+                {/* --- SECURITY & COMPLIANCE --- */}
+                <section className="py-20 px-6 bg-gray-900">
+                    <div className="max-w-6xl mx-auto bg-gradient-to-r from-gray-800 to-gray-900 border border-gray-700 rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center gap-12">
+                        <div className="flex-1 space-y-6">
+                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/20 text-green-400 text-sm font-bold border border-green-500/30">
+                                <Shield size={14} /> SECURITY FIRST
+                            </div>
+                            <h2 className="text-3xl font-bold">Enterprise-Grade Compliance</h2>
+                            <p className="text-gray-400 leading-relaxed">
+                                We treat your data with the highest level of care. Pika AI is designed with privacy-first architecture, ensuring that your sensitive domain data never leaves your control without authorization.
+                            </p>
+                            <div className="grid grid-cols-2 gap-4 pt-4">
+                                <div className="flex items-center gap-2 text-gray-300"><CheckCircle size={18} className="text-yellow-500" /> SOC2 Compliant</div>
+                                <div className="flex items-center gap-2 text-gray-300"><CheckCircle size={18} className="text-yellow-500" /> GDPR Ready</div>
+                                <div className="flex items-center gap-2 text-gray-300"><CheckCircle size={18} className="text-yellow-500" /> End-to-End Encrypted</div>
+                                <div className="flex items-center gap-2 text-gray-300"><CheckCircle size={18} className="text-yellow-500" /> 99.9% Uptime SLA</div>
+                            </div>
+                        </div>
+                        <div className="flex-1 flex justify-center">
+                            <Shield size={180} className="text-gray-800 drop-shadow-2xl" strokeWidth={0.5} />
+                            <div className="absolute">
+                                <Lock size={80} className="text-yellow-500" />
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* --- TESTIMONIALS --- */}
+                <section className="py-24 px-6 relative overflow-hidden">
+                    {/* Decorative bg */}
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gray-800/20 via-transparent to-transparent opacity-50"></div>
+
+                    <div className="max-w-7xl mx-auto relative z-10">
+                        <div className="text-center mb-16">
+                            <h2 className="text-3xl md:text-5xl font-bold mb-4">Trusted by Innovators</h2>
+                            <p className="text-gray-400">See what early adopters are building with Pika AI.</p>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            <TestimonialCard
+                                quote="Pika's medical domain module allowed us to screen patient inquiries with 95% accuracy before they reached a human doctor."
+                                author="Dr. Sarah Chen"
+                                role="CTO, MedTech Solutions"
+                            />
+                            <TestimonialCard
+                                quote="The ability to customize the mascot's personality made our internal tool feel like a real team member. Engagement went up 40%."
+                                author="Marcus Johnson"
+                                role="VP of Operations, FinCorp"
+                            />
+                            <TestimonialCard
+                                quote="We replaced our rigid flowchart bot with Pika in 3 days. The conversion rate on our pricing page doubled instantly."
+                                author="Elena Rodriguez"
+                                role="Growth Lead, StartUp Inc."
                             />
                         </div>
                     </div>
@@ -269,6 +446,31 @@ const StatCard = ({ number, label }) => (
         <div className="text-2xl font-bold text-white mb-1">{number}</div>
         <div className="text-sm text-gray-500 uppercase tracking-widest">{label}</div>
     </div>
+);
+
+const TimelineItem = ({ year, title, description, active = false }) => (
+    <div className="relative pl-8 md:pl-0">
+        <div className={`absolute left-[-9px] md:left-[-41px] top-1.5 w-4 h-4 rounded-full border-2 border-gray-900 ${active ? 'bg-yellow-400' : 'bg-gray-700'}`} />
+        <div className="mb-1">
+            <span className={`text-sm font-bold ${active ? 'text-yellow-400' : 'text-gray-500'}`}>{year}</span>
+        </div>
+        <h3 className="text-xl font-bold mb-2">{title}</h3>
+        <p className="text-gray-400 leading-relaxed">{description}</p>
+    </div>
+);
+
+const TestimonialCard = ({ quote, author, role }) => (
+    <motion.div
+        whileHover={{ y: -5 }}
+        className="p-8 bg-gray-800/20 border border-gray-700/50 rounded-2xl flex flex-col"
+    >
+        <MessageSquare className="text-yellow-500/30 mb-6" size={30} />
+        <p className="text-gray-300 italic mb-8 flex-1">"{quote}"</p>
+        <div>
+            <div className="font-bold text-white">{author}</div>
+            <div className="text-sm text-gray-500">{role}</div>
+        </div>
+    </motion.div>
 );
 
 export default AboutPage;

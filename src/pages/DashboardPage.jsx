@@ -69,11 +69,11 @@ const DashboardPage = ({ theme, setTheme }) => {
             onMouseLeave={handleCardLeave}
         >
             <div className="flex items-center justify-between mb-4">
-                <div className={`p - 3 rounded - lg ${ color } bg - opacity - 20`}>
-                    <Icon size={24} className={color.replace('bg-', 'text-')} />
+                <div className={`p-3 rounded-lg ${color} bg-opacity-20`}>
+                    <Icon size={24} className={color.split(' ')[0].replace('bg-', 'text-')} />
                 </div>
                 {trend && (
-                    <div className={`flex items - center gap - 1 text - xs font - semibold ${ trend > 0 ? 'text-green-500' : 'text-red-500' } `}>
+                    <div className={`flex items-center gap-1 text-xs font-semibold ${trend > 0 ? 'text-green-500' : 'text-red-500'}`}>
                         {trend > 0 ? <ArrowUp size={14} /> : <ArrowDown size={14} />}
                         {Math.abs(trend)}%
                     </div>
@@ -104,7 +104,7 @@ const DashboardPage = ({ theme, setTheme }) => {
 
                     {/* Dashboard Mascot */}
                     <div className="hidden lg:block relative z-20 pr-12">
-                         <Mascot
+                        <Mascot
                             size={100}
                             color="bg-yellow-400"
                             target={mascotTarget}
@@ -171,7 +171,7 @@ const DashboardPage = ({ theme, setTheme }) => {
                                         dataKey="value"
                                     >
                                         {pieData.map((entry, index) => (
-                                            <Cell key={`cell - ${ index } `} fill={COLORS[index % COLORS.length]} />
+                                            <Cell key={`cell - ${index} `} fill={COLORS[index % COLORS.length]} />
                                         ))}
                                     </Pie>
                                     <Tooltip />
