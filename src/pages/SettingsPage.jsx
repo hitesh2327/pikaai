@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
 import {
     User, Lock, Users, CreditCard, Layout, Mail, Bell,
     Shield, Plus, ArrowRight, Check, AlertCircle, Trash2, Zap
@@ -7,7 +8,14 @@ import {
 import DashboardLayout from '../components/Dashboard/DashboardLayout';
 
 const SettingsPage = ({ theme, setTheme }) => {
-    const [activeTab, setActiveTab] = useState('billing');
+    const location = useLocation();
+    const [activeTab, setActiveTab] = useState(location.state?.activeTab || 'billing');
+
+    useEffect(() => {
+        if (location.state?.activeTab) {
+            setActiveTab(location.state.activeTab);
+        }
+    }, [location.state]);
 
     const menuItems = [
         { id: 'details', label: 'My Details', icon: User },

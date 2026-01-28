@@ -39,7 +39,8 @@ const Header = ({ activePage }) => {
                     About Pika AI
                 </Link>
                 <Link
-                    to="/under-development"
+                    to="/settings"
+                    state={{ activeTab: 'profile' }}
                     className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white text-sm font-medium transition-colors"
                 >
                     Profile
