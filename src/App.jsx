@@ -8,6 +8,7 @@ import DashboardPage from './pages/DashboardPage';
 import UnderDevelopmentPage from './pages/UnderDevelopmentPage';
 import AboutPage from './pages/AboutPage';
 import SettingsPage from './pages/SettingsPage';
+import InsightsPage from './pages/InsightsPage';
 import { tokenUtils } from './utils/token';
 
 // Protected Route Wrapper
@@ -94,6 +95,13 @@ function App() {
         <Route path="/dashboard" element={
           <ProtectedRoute>
             <DashboardPage theme={theme} setTheme={setTheme} />
+          </ProtectedRoute>
+        } />
+
+        {/* Insights Route */}
+        <Route path="/dashboard/insights" element={
+          <ProtectedRoute>
+            <InsightsPage theme={theme} setTheme={setTheme} />
           </ProtectedRoute>
         } />
 

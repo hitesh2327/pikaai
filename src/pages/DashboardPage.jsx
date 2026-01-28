@@ -1,6 +1,7 @@
 // javascript
 import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import {
     ResponsiveContainer, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip,
     PieChart, Pie, Cell
@@ -97,9 +98,11 @@ const DashboardPage = ({ theme, setTheme }) => {
                     <div className="relative z-10 max-w-2xl">
                         <h1 className="text-3xl font-bold mb-2">Welcome back to PikaAI 👋</h1>
                         <p className="text-white/90 text-lg">Here’s how your AI conversations are performing. You have reached 80% of your monthly token limit.</p>
-                        <button className="mt-6 px-6 py-2 bg-white text-purple-600 font-bold rounded-lg shadow-md hover:bg-gray-100 transition-colors">
-                            View Insights
-                        </button>
+                        <Link to="/dashboard/insights">
+                            <button className="mt-6 px-6 py-2 bg-white text-purple-600 font-bold rounded-lg shadow-md hover:bg-gray-100 transition-colors">
+                                View Insights
+                            </button>
+                        </Link>
                     </div>
 
                     {/* Dashboard Mascot */}
