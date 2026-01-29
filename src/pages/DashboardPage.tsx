@@ -1,22 +1,34 @@
-// javascript
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import {
     ResponsiveContainer, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip,
     PieChart, Pie, Cell
 } from 'recharts';
-import { Users, MessageSquare, Zap, Activity, ArrowUp, ArrowDown } from 'lucide-react';
+import { Users, MessageSquare, Zap, Activity, ArrowUp, ArrowDown, LucideIcon } from 'lucide-react';
 import DashboardLayout from '../components/Dashboard/DashboardLayout';
 import Mascot from '../components/Mascot';
+import {
+    DashboardLayoutProps,
+    DashboardStatCardProps,
+    ActivityPoint,
+    PiePoint
+} from '../types/dashboard';
+import { Theme } from '../types/common';
+import { Emotion } from '../types/mascot';
 
-const DashboardPage = ({ theme, setTheme }) => {
+interface DashboardPageProps {
+    theme: Theme;
+    setTheme: (theme: Theme) => void;
+}
+
+const DashboardPage: React.FC<DashboardPageProps> = ({ theme, setTheme }) => {
     // State for Mascot Tracking
-    const [mascotTarget, setMascotTarget] = useState(null);
-    const [mascotEmotion, setMascotEmotion] = useState('idle');
+    const [mascotTarget, setMascotTarget] = useState<{ x: number, y: number } | null>(null);
+    const [mascotEmotion, setMascotEmotion] = useState<Emotion>('idle');
 
     // Mock Data
-    const activityData = [
+    const activityData: ActivityPoint[] = [
         { name: 'Mon', conversations: 40, msgs: 240 },
         { name: 'Tue', conversations: 30, msgs: 139 },
         { name: 'Wed', conversations: 20, msgs: 980 },
@@ -26,7 +38,7 @@ const DashboardPage = ({ theme, setTheme }) => {
         { name: 'Sun', conversations: 34, msgs: 430 },
     ];
 
-    const pieData = [
+    const pieData: PiePoint[] = [
         { name: 'Active', value: 400 },
         { name: 'New', value: 300 },
         { name: 'Inactive', value: 300 },
@@ -34,13 +46,7 @@ const DashboardPage = ({ theme, setTheme }) => {
 
     const COLORS = ['#FACC15', '#4ADE80', '#94A3B8']; // Yellow, Green, Gray
 
-    const usageData = [
-        { name: 'GPT-3.5', usage: 4000 },
-        { name: 'GPT-4', usage: 2400 },
-        { name: 'DALL-E', usage: 2400 },
-    ];
-
-    const handleCardHover = (e, trend) => {
+    const handleCardHover = (e: React.MouseEvent<HTMLDivElement>, trend?: number) => {
         const rect = e.currentTarget.getBoundingClientRect();
         setMascotTarget({
             x: rect.left + rect.width / 2,
@@ -61,7 +67,7 @@ const DashboardPage = ({ theme, setTheme }) => {
         setMascotEmotion('idle');
     };
 
-    const StatCard = ({ title, value, trend, icon: Icon, color }) => (
+    const StatCard: React.FC<DashboardStatCardProps> = ({ title, value, trend, icon: Icon, color }) => (
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -73,7 +79,7 @@ const DashboardPage = ({ theme, setTheme }) => {
                 <div className={`p-3 rounded-lg ${color} bg-opacity-20`}>
                     <Icon size={24} className={color.split(' ')[0].replace('bg-', 'text-')} />
                 </div>
-                {trend && (
+                {trend !== undefined && (
                     <div className={`flex items-center gap-1 text-xs font-semibold ${trend > 0 ? 'text-green-500' : 'text-red-500'}`}>
                         {trend > 0 ? <ArrowUp size={14} /> : <ArrowDown size={14} />}
                         {Math.abs(trend)}%
@@ -110,7 +116,7 @@ const DashboardPage = ({ theme, setTheme }) => {
                         <Mascot
                             size={100}
                             color="bg-yellow-400"
-                            target={mascotTarget}
+                            target={mascotTarget || undefined}
                             emotion={mascotEmotion}
                             className="shadow-2xl"
                         />

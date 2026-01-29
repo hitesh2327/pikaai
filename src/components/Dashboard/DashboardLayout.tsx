@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import DashboardSidebar from './DashboardSidebar';
 import Footer from '../Footer';
 import { Menu, Bell, Search, Sun, Moon } from 'lucide-react';
+import { DashboardLayoutProps } from '../../types/dashboard';
 
-const DashboardLayout = ({ children, theme, setTheme }) => {
+const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, theme, setTheme }) => {
     const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
     const toggleTheme = () => {

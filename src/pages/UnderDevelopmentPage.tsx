@@ -4,7 +4,7 @@ import { ArrowLeft, Construction } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 
-const UnderDevelopmentPage = () => {
+const UnderDevelopmentPage: React.FC = () => {
     return (
         <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center">
             <div className="flex-1 flex flex-col items-center justify-center p-6 text-center">

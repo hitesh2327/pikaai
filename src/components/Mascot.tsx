@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, Variants } from 'framer-motion';
 import useMousePosition from '../hooks/useMousePosition';
+import { EyeProps, MascotProps } from '../types/mascot';
 
-const Eye = ({ lookAt, isLookingAway, size = 12, pupilSize = 4 }) => {
-    const eyeRef = useRef(null);
+const Eye: React.FC<EyeProps> = ({ lookAt, isLookingAway, size = 12, pupilSize = 4 }) => {
+    const eyeRef = useRef<HTMLDivElement>(null);
     const [pupilPos, setPupilPos] = useState({ x: 0, y: 0 });
 
     useEffect(() => {
@@ -50,7 +51,7 @@ const Eye = ({ lookAt, isLookingAway, size = 12, pupilSize = 4 }) => {
     );
 };
 
-const Mascot = ({
+const Mascot: React.FC<MascotProps> = ({
     emotion = 'idle', // idle, happy, thinking, neutral, surprise
     size = 40,
     color = 'bg-yellow-400',
@@ -74,20 +75,19 @@ const Mascot = ({
     useEffect(() => {
         const blinkLoop = () => {
             const nextBlink = Math.random() * 4000 + 2000; // 2-6 seconds
-            setTimeout(() => {
+            const timer = setTimeout(() => {
                 setIsBlinking(true);
                 setTimeout(() => setIsBlinking(false), 150);
                 blinkLoop();
             }, nextBlink);
+            return timer;
         };
-        blinkLoop();
-        return () => { }; // Cleanup not strictly needed for this simple timeout loop pattern
+        const timer = blinkLoop();
+        return () => clearTimeout(timer);
     }, []);
 
-    const isThinking = emotion === 'thinking';
-
     // Animation Variants
-    const containerVariants = {
+    const containerVariants: Variants = {
         idle: { y: 0 },
         hover: { y: -5, scale: 1.05 },
         thinking: {
@@ -109,13 +109,13 @@ const Mascot = ({
             <div className="flex gap-1 relative z-10 mt-2">
                 <AnimatePresence>
                     {!isBlinking && (
-                        <motion.div className="flex gap-1" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, scaleY: 0 }}>
+                        <motion.div key="eyes" className="flex gap-1" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, scaleY: 0 }}>
                             <Eye lookAt={lookAt} size={size * 0.25} pupilSize={size * 0.1} />
                             <Eye lookAt={lookAt} size={size * 0.25} pupilSize={size * 0.1} />
                         </motion.div>
                     )}
                     {isBlinking && (
-                        <motion.div className="flex gap-1 absolute top-1/2 -translate-y-1/2" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                        <motion.div key="blink" className="flex gap-1 absolute top-1/2 -translate-y-1/2" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                             <div className="bg-black/80 rounded-full" style={{ width: size * 0.25, height: 2 }}></div>
                             <div className="bg-black/80 rounded-full" style={{ width: size * 0.25, height: 2 }}></div>
                         </motion.div>

@@ -2,15 +2,16 @@ import React, { useState, useEffect, useRef } from 'react';
 import { MessageSquarePlus, MessageSquare, LogOut, Settings, HelpCircle, User, PanelLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { authService } from '../../services/auth';
+import { SidebarProps, ChatHistoryItem } from '../../types/chat';
 
-const Sidebar = ({ isOpen, toggleSidebar }) => {
+const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
     const [showProfileMenu, setShowProfileMenu] = useState(false);
     const navigate = useNavigate();
-    const profileMenuRef = useRef(null);
-    const profileButtonRef = useRef(null);
+    const profileMenuRef = useRef<HTMLDivElement>(null);
+    const profileButtonRef = useRef<HTMLButtonElement>(null);
 
     // Mock Data
-    const chatHistory = [
+    const chatHistory: ChatHistoryItem[] = [
         { id: 1, title: "New Conversation" },
         { id: 2, title: "Project Discussion" },
         { id: 3, title: "React Architecture" },
@@ -25,13 +26,13 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
     // Outside Click Handler for Profile Menu
     useEffect(() => {
-        const handleClickOutside = (event) => {
+        const handleClickOutside = (event: MouseEvent) => {
             if (
                 showProfileMenu &&
                 profileMenuRef.current &&
-                !profileMenuRef.current.contains(event.target) &&
-                profileButtonRef.current && // Ensure button ref exists
-                !profileButtonRef.current.contains(event.target)
+                !profileMenuRef.current.contains(event.target as Node) &&
+                profileButtonRef.current &&
+                !profileButtonRef.current.contains(event.target as Node)
             ) {
                 setShowProfileMenu(false);
             }

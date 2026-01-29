@@ -1,18 +1,19 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, User, Bot, Paperclip, FileText, X } from 'lucide-react';
 import Mascot from '../Mascot';
+import { Message } from '../../types/chat';
 
-const ChatArea = () => {
-    const [messages, setMessages] = useState([
+const ChatArea: React.FC = () => {
+    const [messages, setMessages] = useState<Message[]>([
         { id: 1, role: 'assistant', content: 'Hello! How can I help you today?' },
         { id: 2, role: 'user', content: 'I need help implementing a chat layout.' },
         { id: 3, role: 'assistant', content: 'Sure! A chat layout typically consists of a sidebar for history and a main area for messages. How specific do you want to get?' },
     ]);
     const [inputValue, setInputValue] = useState('');
-    const [attachedFile, setAttachedFile] = useState(null);
+    const [attachedFile, setAttachedFile] = useState<File | null>(null);
     const [isTyping, setIsTyping] = useState(false);
-    const messagesEndRef = useRef(null);
-    const fileInputRef = useRef(null);
+    const messagesEndRef = useRef<HTMLDivElement>(null);
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     // Auto-Scroll Logic
     const scrollToBottom = () => {
@@ -32,7 +33,7 @@ const ChatArea = () => {
             content = `[Attached: ${attachedFile.name}] ${content}`;
         }
 
-        const newMessage = { id: Date.now(), role: 'user', content: content };
+        const newMessage: Message = { id: Date.now(), role: 'user', content: content };
         setMessages([...messages, newMessage]);
         setInputValue('');
         setAttachedFile(null); // Clear attachment
@@ -45,7 +46,7 @@ const ChatArea = () => {
         }, 3000);
     };
 
-    const handleFileSelect = (e) => {
+    const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             setAttachedFile(e.target.files[0]);
         }

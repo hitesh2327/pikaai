@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Twitter, Github, Linkedin, Mail } from 'lucide-react';
 
-const Footer = () => {
+const Footer: React.FC = () => {
     return (
         <footer className="w-full bg-gray-900 border-t border-gray-800 pt-16 pb-8 text-gray-400 font-sans">
             <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">

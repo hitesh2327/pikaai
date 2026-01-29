@@ -2,18 +2,25 @@ import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Mascot from '../components/Mascot';
-import { motion } from 'framer-motion';
-import { ArrowRight, Cpu, Globe, Zap, Shield, Users, Layers, MessageSquare, CheckCircle, Lock } from 'lucide-react';
+import { motion, Variants } from 'framer-motion';
+import { ArrowRight, Globe, Zap, Shield, Users, Layers, MessageSquare, CheckCircle, Lock } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import {
+    FeatureCardProps,
+    CapabilityBlockProps,
+    StatCardProps,
+    TimelineItemProps,
+    TestimonialCardProps
+} from '../types/pages';
 
-const AboutPage = () => {
+const AboutPage: React.FC = () => {
     // Animation Variants
-    const fadeInUp = {
+    const fadeInUp: Variants = {
         hidden: { opacity: 0, y: 30 },
         visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
     };
 
-    const staggerContainer = {
+    const staggerContainer: Variants = {
         hidden: { opacity: 0 },
         visible: {
             opacity: 1,
@@ -46,7 +53,7 @@ const AboutPage = () => {
                             transition={{ type: "spring", duration: 0.8 }}
                             className="flex justify-center mb-6"
                         >
-                            <Mascot emotion="happy" size={80} interaction="track-cursor" />
+                            <Mascot emotion="happy" size={80} />
                         </motion.div>
 
                         <motion.h1
@@ -97,7 +104,6 @@ const AboutPage = () => {
                             viewport={{ once: true }}
                             className="relative aspect-video bg-gray-900 rounded-3xl overflow-hidden shadow-2xl border border-gray-800 group"
                         >
-                            {/* Placeholder for embedded video */}
                             <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-black flex items-center justify-center">
                                 <div className="text-center p-8">
                                     <div className="w-20 h-20 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-6 text-black cursor-pointer hover:scale-110 transition-transform shadow-lg shadow-yellow-500/20 group-hover:shadow-yellow-500/40">
@@ -107,7 +113,6 @@ const AboutPage = () => {
                                 </div>
                             </div>
 
-                            {/* Decorative Elements */}
                             <div className="absolute top-4 left-4 flex gap-2">
                                 <div className="w-3 h-3 rounded-full bg-red-500"></div>
                                 <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
@@ -213,7 +218,6 @@ const AboutPage = () => {
                         </motion.div>
 
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                            {/* Capability 1 */}
                             <CapabilityBlock
                                 title="AI Interview Platform"
                                 description="Transform your hiring process with AI-driven interviews. Pika AI conducts structured interviews, evaluates candidate responses based on skills, and provides detailed summaries."
@@ -221,7 +225,6 @@ const AboutPage = () => {
                                 color="border-l-4 border-green-500"
                             />
 
-                            {/* Capability 2 */}
                             <CapabilityBlock
                                 title="Domain-Specific Intelligence"
                                 description="Deeply specialized knowledge for critical sectors. Configure Pika AI to act as an expert in Medical, Legal, Finance, or Tech Support fields with high accuracy."
@@ -229,7 +232,6 @@ const AboutPage = () => {
                                 color="border-l-4 border-blue-500"
                             />
 
-                            {/* Capability 3 */}
                             <CapabilityBlock
                                 title="Automation Chatbots"
                                 description="Embed intelligent assistants into your workflow. Handle customer support tickets, qualify leads, or assist internal teams 24/7 without burnout."
@@ -237,7 +239,6 @@ const AboutPage = () => {
                                 color="border-l-4 border-purple-500"
                             />
 
-                            {/* Capability 4 */}
                             <CapabilityBlock
                                 title="Generic Smart Assistant"
                                 description="A versatile companion for everyday tasks. Brainstorm ideas, draft content, summarize documents, and explore new topics with a helpful AI partner."
@@ -316,7 +317,6 @@ const AboutPage = () => {
 
                 {/* --- TESTIMONIALS --- */}
                 <section className="py-24 px-6 relative overflow-hidden">
-                    {/* Decorative bg */}
                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gray-800/20 via-transparent to-transparent opacity-50"></div>
 
                     <div className="max-w-7xl mx-auto relative z-10">
@@ -392,7 +392,7 @@ const AboutPage = () => {
                     >
                         <h2 className="text-4xl md:text-6xl font-bold mb-8">Ready to transform your workflow?</h2>
                         <Link to="/pricing" className="inline-flex items-center gap-3 px-10 py-5 bg-white text-black text-lg font-bold rounded-full hover:bg-gray-200 transition-all transform hover:scale-105 shadow-xl">
-                            Get Started Now <ArrowRight />
+                            Get Started Now <ArrowRight size={24} />
                         </Link>
                     </motion.div>
                 </section>
@@ -406,7 +406,7 @@ const AboutPage = () => {
 
 // --- Helper Components ---
 
-const FeatureCard = ({ icon, title, description }) => (
+const FeatureCard: React.FC<FeatureCardProps> = ({ icon, title, description }) => (
     <motion.div
         variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
         className="p-8 bg-gray-800/40 border border-gray-700 rounded-2xl hover:bg-gray-800 transition-colors duration-300"
@@ -417,7 +417,7 @@ const FeatureCard = ({ icon, title, description }) => (
     </motion.div>
 );
 
-const CapabilityBlock = ({ title, description, tags, color }) => (
+const CapabilityBlock: React.FC<CapabilityBlockProps> = ({ title, description, tags, color }) => (
     <motion.div
         initial={{ opacity: 0, x: -20 }}
         whileInView={{ opacity: 1, x: 0 }}
@@ -437,18 +437,17 @@ const CapabilityBlock = ({ title, description, tags, color }) => (
     </motion.div>
 );
 
-const StatCard = ({ number, label }) => (
+const StatCard: React.FC<StatCardProps> = ({ number, label }) => (
     <div className="p-6">
         <div className="text-yellow-500/20 mb-4 flex justify-center">
             <Users size={32} className="text-gray-600" />
-            {/* You could make icons dynamic props if needed, reused generic for layout */}
         </div>
         <div className="text-2xl font-bold text-white mb-1">{number}</div>
         <div className="text-sm text-gray-500 uppercase tracking-widest">{label}</div>
     </div>
 );
 
-const TimelineItem = ({ year, title, description, active = false }) => (
+const TimelineItem: React.FC<TimelineItemProps> = ({ year, title, description, active = false }) => (
     <div className="relative pl-8 md:pl-0">
         <div className={`absolute left-[-9px] md:left-[-41px] top-1.5 w-4 h-4 rounded-full border-2 border-gray-900 ${active ? 'bg-yellow-400' : 'bg-gray-700'}`} />
         <div className="mb-1">
@@ -459,7 +458,7 @@ const TimelineItem = ({ year, title, description, active = false }) => (
     </div>
 );
 
-const TestimonialCard = ({ quote, author, role }) => (
+const TestimonialCard: React.FC<TestimonialCardProps> = ({ quote, author, role }) => (
     <motion.div
         whileHover={{ y: -5 }}
         className="p-8 bg-gray-800/20 border border-gray-700/50 rounded-2xl flex flex-col"

@@ -9,28 +9,24 @@ const REFRESH_TOKEN_KEY = 'refresh_token';
 export const tokenUtils = {
     /**
      * Get the current access token
-     * @returns {string|null}
      */
-    getAccessToken: () => {
+    getAccessToken: (): string | null => {
         if (typeof window === 'undefined') return null;
         return sessionStorage.getItem(ACCESS_TOKEN_KEY);
     },
 
     /**
      * Get the current refresh token
-     * @returns {string|null}
      */
-    getRefreshToken: () => {
+    getRefreshToken: (): string | null => {
         if (typeof window === 'undefined') return null;
         return sessionStorage.getItem(REFRESH_TOKEN_KEY);
     },
 
     /**
      * Store tokens
-     * @param {string} accessToken 
-     * @param {string} refreshToken 
      */
-    setTokens: (accessToken, refreshToken) => {
+    setTokens: (accessToken: string, refreshToken?: string): void => {
         if (typeof window === 'undefined') return;
         if (accessToken) sessionStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
         if (refreshToken) sessionStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);
@@ -39,7 +35,7 @@ export const tokenUtils = {
     /**
      * Clear all tokens (Logout)
      */
-    clearTokens: () => {
+    clearTokens: (): void => {
         if (typeof window === 'undefined') return;
         sessionStorage.removeItem(ACCESS_TOKEN_KEY);
         sessionStorage.removeItem(REFRESH_TOKEN_KEY);

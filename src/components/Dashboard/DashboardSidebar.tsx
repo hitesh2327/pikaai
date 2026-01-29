@@ -1,16 +1,17 @@
 import React from 'react';
 import { Home, MessageSquare, CreditCard, PieChart, Settings, LogOut, X } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
+import { DashboardSidebarProps, MenuItem } from '../../types/dashboard';
 
-const DashboardSidebar = ({ isOpen, toggleSidebar, mobileOnly = false }) => {
+const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ isOpen, toggleSidebar, mobileOnly = false }) => {
     const location = useLocation();
 
-    const menuItems = [
+    const menuItems: MenuItem[] = [
         { icon: Home, label: 'Dashboard', path: '/dashboard' },
         { icon: MessageSquare, label: 'Chats', path: '/chat' },
         { icon: CreditCard, label: 'Pricing', path: '/pricing' },
-        { icon: PieChart, label: 'Insights', path: '/dashboard/insights' }, // Placeholder route
-        { icon: Settings, label: 'Settings', path: '/settings' }, // Placeholder route
+        { icon: PieChart, label: 'Insights', path: '/dashboard/insights' },
+        { icon: Settings, label: 'Settings', path: '/settings' },
     ];
 
     const sidebarClasses = mobileOnly
@@ -35,6 +36,7 @@ const DashboardSidebar = ({ isOpen, toggleSidebar, mobileOnly = false }) => {
             <nav className="flex-1 py-6 space-y-1">
                 {menuItems.map((item) => {
                     const isActive = location.pathname === item.path;
+                    const Icon = item.icon;
                     return (
                         <Link
                             key={item.label}
@@ -46,7 +48,7 @@ const DashboardSidebar = ({ isOpen, toggleSidebar, mobileOnly = false }) => {
                                 }`}
                         >
                             {isActive && <div className="absolute left-0 top-0 bottom-0 w-1 bg-yellow-400" />}
-                            <item.icon size={20} />
+                            <Icon size={20} />
                             <span>{item.label}</span>
                         </Link>
                     );

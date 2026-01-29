@@ -1,30 +1,42 @@
 import { tokenUtils } from '../utils/token';
 
-const BASE_URL = process.env.GenericChabotAPI;
+// Use a type-safe way to access env variables in Vite
+const BASE_URL: string = (process.env.GenericChabotAPI as string) || '';
 
 if (!BASE_URL) {
     console.error("GenericChabotAPI environment variable is not set!");
+}
+
+interface ApiOptions extends RequestInit {
+    body?: BodyInit | null;
+}
+
+export interface ApiResponse<T = unknown> {
+    ok: boolean;
+    status: number;
+    data?: T;
+    error?: string;
 }
 
 /**
  * Generic API Client
  * Wraps fetch to handle base URL and common headers.
  */
-export const apiClient = async (endpoint, options = {}) => {
+export const apiClient = async <T = unknown>(endpoint: string, options: ApiOptions = {}): Promise<ApiResponse<T>> => {
     const url = `${BASE_URL}${endpoint}`;
 
     const token = tokenUtils.getAccessToken();
 
-    const defaultHeaders = {
+    const defaultHeaders: Record<string, string> = {
         'Content-Type': 'application/json',
         ...(token ? { 'Authorization': `Bearer ${token}` } : {})
     };
 
-    const config = {
+    const config: RequestInit = {
         ...options,
         headers: {
             ...defaultHeaders,
-            ...options.headers,
+            ...((options.headers as Record<string, string>) || {}),
         },
     };
 
@@ -34,18 +46,19 @@ export const apiClient = async (endpoint, options = {}) => {
 
         const response = await fetch(url, config);
 
-        // Simple error handling for now
         if (!response.ok) {
             console.error(`API Call Failed: ${response.status} ${response.statusText}`);
-            // Depending on requirements, we might want to throw here
-            // throw new Error(`API Error: ${response.status}`);
         }
 
         const data = await response.json();
         return { ok: response.ok, status: response.status, data };
 
-    } catch (error) {
+    } catch (error: unknown) {
         console.error("Network or API Error:", error);
-        return { ok: false, error: error.message };
+        return {
+            ok: false,
+            status: 0,
+            error: error instanceof Error ? error.message : String(error)
+        };
     }
 };

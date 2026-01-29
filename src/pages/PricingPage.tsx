@@ -5,12 +5,13 @@ import { motion } from 'framer-motion';
 import { Check, AlertCircle } from 'lucide-react';
 import { pricingService } from '../services/pricing';
 import { useNavigate } from 'react-router-dom';
+import { PricingPlan, BillingCycle } from '../types/pricing';
 
-const PricingPage = () => {
+const PricingPage: React.FC = () => {
     const [isAnnual, setIsAnnual] = useState(false);
-    const [plans, setPlans] = useState([]);
+    const [plans, setPlans] = useState<PricingPlan[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<string | null>(null);
 
     const navigate = useNavigate();
 
@@ -19,19 +20,12 @@ const PricingPage = () => {
             setIsLoading(true);
             setError(null);
             try {
-                const billingCycle = isAnnual ? 'yearly' : 'monthly';
+                const billingCycle: BillingCycle = isAnnual ? 'yearly' : 'monthly';
                 const data = await pricingService.getPricing(billingCycle);
-
-                // Handle different response structures (Array direct or { plans: [...] })
-                const plansData = Array.isArray(data) ? data : (data.plans || []);
-                setPlans(plansData);
-            } catch (err) {
+                setPlans(data);
+            } catch (err: unknown) {
                 console.error("Failed to fetch pricing:", err);
                 setError("Failed to load pricing plans. Please try again later.");
-
-                // Fallback for development if API is offline (Prevent total blockage as per request "Do not break layout")
-                // REMOVE this in production if strict "No mock" is required, but user said "Do NOT mock... once API is integrated".
-                // Since I cannot *ensure* API is running, I will keep the state empty if error occurs, showing the error message.
             } finally {
                 setIsLoading(false);
             }
@@ -44,7 +38,7 @@ const PricingPage = () => {
         navigate('/under-development');
     };
 
-    const SkeletonCard = () => (
+    const SkeletonCard: React.FC = () => (
         <div className="flex flex-col p-8 rounded-2xl border border-gray-800 bg-gray-800/40 animate-pulse h-[450px]">
             <div className="h-6 w-1/3 bg-gray-700 rounded mb-4"></div>
             <div className="h-10 w-1/2 bg-gray-700 rounded mb-8"></div>
@@ -141,7 +135,6 @@ const PricingPage = () => {
                                     <h3 className="text-lg font-semibold text-white mb-2">{plan.name}</h3>
                                     <div className="flex items-baseline gap-1">
                                         <span className="text-4xl font-bold text-white">
-                                            {/* Handle Price: "0.00" string or number */}
                                             {(Number(plan.price) === 0) ? 'Free' : `$${Number(plan.price)}`}
                                         </span>
                                         {Number(plan.price) > 0 && (
@@ -160,7 +153,6 @@ const PricingPage = () => {
                                             <span>{feature}</span>
                                         </div>
                                     ))}
-                                    {/* Fallback if features is missing or empty */}
                                     {(!plan.features || plan.features.length === 0) && (
                                         <div className="text-sm text-gray-500 italic">No specific features listed.</div>
                                     )}

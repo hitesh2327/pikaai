@@ -6,25 +6,32 @@ import {
     ShieldCheck, Target, Zap, ChevronDown, ChevronUp
 } from 'lucide-react';
 import DashboardLayout from '../components/Dashboard/DashboardLayout';
+import {
+    InsightsPageProps,
+    InsightCardProps,
+    Insight,
+    InsightCategory,
+    TimelineItemData
+} from '../types/insights';
 
-const InsightsPage = ({ theme, setTheme }) => {
-    const [expandedInsight, setExpandedInsight] = useState(null);
+const InsightsPage: React.FC<InsightsPageProps> = ({ theme, setTheme }) => {
+    const [expandedInsight, setExpandedInsight] = useState<string | null>(null);
 
-    const recommendations = [
+    const recommendations: string[] = [
         "Tighten domain constraints for financial conversations to reduce uncertainty.",
         "Enable 'Interview Mode' for candidate screening to improve lead qualification.",
         "Reduce average response length for general queries to minimize user fatigue.",
         "Add clarification prompts for ambiguous technical support requests."
     ];
 
-    const timelineData = [
+    const timelineData: TimelineItemData[] = [
         { date: "Jan 28", event: "Optimization Applied", result: "Clarification frequency reduced by 15%", type: "success" },
         { date: "Jan 20", event: "Medical Domain Enabled", result: "Incorrect responses dropped by 42%", type: "success" },
         { date: "Jan 12", event: "Policy Update", result: "New guardrails added to financial topics", type: "neutral" },
         { date: "Jan 05", event: "High Fatigue Detected", result: "Identified drop-offs after 5+ turns", type: "warning" },
     ];
 
-    const insightCategories = [
+    const insightCategories: InsightCategory[] = [
         {
             title: "Conversation Quality",
             description: "Deep dive into interaction efficiency and flow.",
@@ -230,7 +237,7 @@ const InsightsPage = ({ theme, setTheme }) => {
     );
 };
 
-const InsightCard = ({ insight, index, isExpanded, toggleExpand }) => {
+const InsightCard: React.FC<InsightCardProps> = ({ insight, index, isExpanded, toggleExpand }) => {
     const Icon = insight.icon;
 
     return (
