@@ -8,6 +8,10 @@ export default defineConfig(({ mode }) => {
     plugins: [react()],
     define: {
       'process.env.GenericChabotAPI': JSON.stringify(env.GenericChabotAPI)
+    },
+    server: {
+      host: true,
+      port: 5173
     }
   }
 })

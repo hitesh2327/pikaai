@@ -8,6 +8,8 @@ import UnderDevelopmentPage from '../pages/UnderDevelopmentPage';
 import AboutPage from '../pages/AboutPage';
 import SettingsPage from '../pages/SettingsPage';
 import InsightsPage from '../pages/InsightsPage';
+import ConversationsPage from '../pages/ConversationsPage';
+import RoomPage from '../pages/RoomPage';
 import { ProtectedRoute } from '../components/ProtectedRoute';
 import { LoginLayout } from '../components/LoginLayout';
 import { Theme } from '../types/common';
@@ -52,6 +54,18 @@ export const AppRouter: React.FC<AppRouterProps> = ({
             <Route path="/chat/:chatId" element={
                 <ProtectedRoute>
                     <ChatPage />
+                </ProtectedRoute>
+            } />
+
+            {/* Conversations Routes */}
+            <Route path="/conversations" element={
+                <ProtectedRoute>
+                    <ConversationsPage theme={theme} setTheme={setTheme} />
+                </ProtectedRoute>
+            } />
+            <Route path="/conversations/:roomId" element={
+                <ProtectedRoute>
+                    <RoomPage theme={theme} setTheme={setTheme} />
                 </ProtectedRoute>
             } />
 

@@ -21,10 +21,10 @@ const Header: React.FC<HeaderProps> = ({ activePage }) => {
                     Chat
                 </Link>
                 <Link
-                    to="/confrencing"
-                    className={`text-sm font-medium transition-colors ${activePage === 'confrencing' ? 'text-black dark:text-white font-bold' : 'text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white'}`}
+                    to="/conversations"
+                    className={`text-sm font-medium transition-colors ${activePage === 'conversations' ? 'text-black dark:text-white font-bold' : 'text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white'}`}
                 >
-                    Confrencing
+                    Conversations
                 </Link>
                 <Link
                     to="/dashboard"
